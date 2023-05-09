@@ -13,7 +13,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 		title = "Order Service API",
 		version = "1.0.0",
 		description = "Order Service Documentation API V1.0.0"
-	), servers = {@Server(url="/api/order", description = "Order API URL")}
+	), servers = {
+		@Server(url="/api/order", description = "Microservice Order API URL"),
+		@Server(url = "/", description = "Monolithic Order API URL")
+	}
 )
 public class OrderApplication {
 
