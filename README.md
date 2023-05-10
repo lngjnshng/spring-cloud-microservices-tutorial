@@ -5,15 +5,20 @@ A Basic Spring Cloud Microservice Sample Project
 * Java 17
 * Spring boot 3.0.6
 * Spring cloud 2022.0.2
-* Eureka Discovery Server
+* Consul Discovery Server
 * Spring Cloud Gateway
 * Swagger 3
 
 ## Start Servers
-### Start Eureka Server
+### Start Consul Server
 ```
-cd discovery
-mvn clean test-compile spring-boot:run
+cd consul
+docker-compose -f cluster.yaml up -d
+```
+### Stop Consul Server
+```
+cd consul
+docker-compose -f cluster.yaml down
 ```
 ### Start API Gateway Server
 ```
@@ -26,9 +31,9 @@ cd order
 mvn clean test-compile spring-boot:run
 ```
 ## Access & Tests
-### Access Eureka web page
+### Access consul web page
 ```
-http://localhost:8081
+http://localhost:8500
 ```
 ### Query order by order ID
 ```
