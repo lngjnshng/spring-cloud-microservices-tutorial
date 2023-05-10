@@ -23,7 +23,6 @@
 	</parent>
 
 	<modules>
-		<module>discovery</module>
 		<module>gateway</module>
 		<module>order</module>
 	</modules>

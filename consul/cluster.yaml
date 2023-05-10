@@ -1,0 +1,44 @@
+version: '2'
+
+services:
+  rubisemi.discover:
+    image: bitnami/consul
+    container_name: rubisemi.discover
+    environment:
+      - CONSUL_BOOTSTRAP_EXPECT=3
+      - CONSUL_CLIENT_LAN_ADDRESS=0.0.0.0
+      - CONSUL_DISABLE_KEYRING_FILE=true
+      - CONSUL_RETRY_JOIN_ADDRESS=rubisemi.discover
+    ports:
+      - '8300:8300'
+      - '8301:8301'
+      - '8301:8301/udp'
+      - '8500:8500'
+      - '8600:8600'
+      - '8600:8600/udp'
+    volumes:
+      - './data/master:/bitnami'
+
+  rubisemi.discover.node2:
+    image: bitnami/consul
+    container_name: rubisemi.discover.node2
+    environment:
+      - CONSUL_BOOTSTRAP_EXPECT=3
+      - CONSUL_CLIENT_LAN_ADDRESS=0.0.0.0
+      - CONSUL_DISABLE_KEYRING_FILE=true
+      - CONSUL_RETRY_JOIN_ADDRESS=rubisemi.discover
+      - CONSUL_ENABLE_UI=false
+    volumes:
+      - './data/node2:/bitnami'
+
+  rubisemi.discover.node3:
+    image: bitnami/consul
+    container_name: rubisemi.discover.node3
+    environment:
+      - CONSUL_BOOTSTRAP_EXPECT=3
+      - CONSUL_CLIENT_LAN_ADDRESS=0.0.0.0
+      - CONSUL_DISABLE_KEYRING_FILE=true
+      - CONSUL_RETRY_JOIN_ADDRESS=rubisemi.discover
+      - CONSUL_ENABLE_UI=false
+    volumes:
+      - './data/node3:/bitnami'
