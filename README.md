@@ -20,6 +20,11 @@ mvn clean test-compile spring-boot:run
 cd gateway
 mvn clean test-compile spring-boot:run
 ```
+### Start Authentication Server
+```
+cd auth
+mvn clean test-compile spring-boot:run
+```
 ### Start Order Server
 ```
 cd order
@@ -30,9 +35,19 @@ mvn clean test-compile spring-boot:run
 ```
 http://localhost:8081
 ```
+### Login
+```
+curl --location --request POST 'http://localhost/api/auth/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+    "username":"admin",
+    "password": "password"
+}'
+```
 ### Query order by order ID
 ```
-curl http://localhost/api/order/1
+curl --location --request GET 'http://localhost/api/order/1' \
+--header 'Authorization: Bearer eyJhbGciOi...Ubn-VZlPmH8gxA' 
 ```
 ### Swagger
 To enable swagger, please set the environment variable ENV as dev before running the server

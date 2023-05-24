@@ -24,8 +24,10 @@
 
 	<modules>
 		<module>discovery</module>
+		<module>auth</module>
 		<module>gateway</module>
 		<module>order</module>
+		<module>common</module>
 	</modules>
 
 
