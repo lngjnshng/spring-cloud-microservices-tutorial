@@ -1,4 +1,4 @@
-package org.rubisemi.common;
+package org.rubisemi.micro.common;
 
 public class AppRole {
     public final static String CUSTOMER = "CUSTOMER";

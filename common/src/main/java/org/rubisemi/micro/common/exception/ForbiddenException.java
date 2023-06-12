@@ -1,4 +1,4 @@
-package org.rubisemi.micro.order.exception;
+package org.rubisemi.micro.common.exception;
 
 public class ForbiddenException extends Exception{
 

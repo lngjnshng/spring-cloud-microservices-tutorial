@@ -1,11 +1,9 @@
-package org.rubisemi.micro.auth.config;
+package org.rubisemi.micro.inventory.config;
 
 import com.nimbusds.jose.jwk.JWK;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
-import org.rubisemi.micro.common.AppAuthority;
-import org.rubisemi.micro.common.AppRole;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -43,7 +41,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         return http
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
-                        .requestMatchers("/login",
+                        .requestMatchers("/login","/stock/**",
                                 "/swagger-ui-custom.html" ,
                                 "/swagger-ui.html",
                                 "/swagger-ui/**",
@@ -66,32 +64,6 @@ public class SecurityConfiguration {
                         .accessDeniedHandler(new BearerTokenAccessDeniedHandler())
                         .and())
                 .build();
-    }
-
-    @Bean
-    UserDetailsService allUsers() {
-        // @formatter:off
-        InMemoryUserDetailsManager manager = new InMemoryUserDetailsManager();
-        manager
-                .createUser(User.builder()
-                        .passwordEncoder(password -> password)
-                        .username("john")
-                        .password("password")
-                        .authorities(AppAuthority.VIEW_ORDER, AppAuthority.VIEW_INVENTORY ,AppRole.ROLE_CUSTOMER)
-                        //.roles(AppRole.USER)
-                        .build()
-                );
-        manager
-                .createUser(User.builder()
-                        .passwordEncoder(password -> password)
-                        .username("admin")
-                        .password("password")
-                        .authorities(AppAuthority.DELETE_ORDER, AppRole.ROLE_ADMIN)
-                        //.roles(AppRole.ADMIN)
-                        .build()
-                );
-        return manager;
-        // @formatter:on
     }
 
     @Bean

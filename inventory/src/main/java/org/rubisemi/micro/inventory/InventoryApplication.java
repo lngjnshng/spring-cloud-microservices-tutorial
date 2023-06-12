@@ -1,4 +1,4 @@
-package org.rubisemi.micro.order;
+package org.rubisemi.micro.inventory;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -8,15 +8,16 @@ import io.swagger.v3.oas.annotations.servers.Server;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.cloud.openfeign.EnableFeignClients;
 
+@SpringBootApplication
+@EnableDiscoveryClient
 @OpenAPIDefinition(info = @Info(
-		title = "Order Service API",
+		title = "Inventory Service API",
 		version = "1.0.0",
-		description = "Order Service Documentation API V1.0.0"
+		description = "Inventory Service Documentation API V1.0.0"
 	), servers = {
-		@Server(url="/api/order", description = "Microservice Order API URL"),
-		@Server(url = "/", description = "Monolithic Order API URL")
+		@Server(url="/api/inventory", description = "Microservice Inventory API URL"),
+		@Server(url = "/", description = "Monolithic Inventory API URL")
 	}
 )
 @SecurityScheme(
@@ -25,13 +26,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 		bearerFormat = "JWT",
 		scheme = "bearer"
 )
-@SpringBootApplication
-@EnableDiscoveryClient
-@EnableFeignClients
-public class OrderApplication {
+public class InventoryApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(OrderApplication.class, args);
+		SpringApplication.run(InventoryApplication.class, args);
 	}
 
 }

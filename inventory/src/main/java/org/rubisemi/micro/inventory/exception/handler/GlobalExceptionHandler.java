@@ -1,9 +1,8 @@
-package org.rubisemi.micro.order.exception.handler;
+package org.rubisemi.micro.inventory.exception.handler;
 
 import org.rubisemi.micro.common.entity.ErrorEntity;
 import org.rubisemi.micro.common.exception.ForbiddenException;
 import org.rubisemi.micro.common.exception.ItemNotFoundException;
-import org.rubisemi.micro.order.exception.InventoryShortageException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -26,14 +25,6 @@ public class GlobalExceptionHandler {
         errorEntity.setCode(String.format("%s",HttpStatus.NOT_FOUND.value()));
         errorEntity.setMessage(ex.getMessage());
         return new ResponseEntity<>(errorEntity, HttpStatus.NOT_FOUND);
-    }
-
-    @ExceptionHandler(InventoryShortageException.class)
-    public ResponseEntity<ErrorEntity> handleNotSufficientException(Exception ex){
-        ErrorEntity errorEntity = new ErrorEntity();
-        errorEntity.setCode(String.format("%s",HttpStatus.NOT_ACCEPTABLE.value()));
-        errorEntity.setMessage(ex.getMessage());
-        return new ResponseEntity<>(errorEntity, HttpStatus.NOT_ACCEPTABLE);
     }
 
 }

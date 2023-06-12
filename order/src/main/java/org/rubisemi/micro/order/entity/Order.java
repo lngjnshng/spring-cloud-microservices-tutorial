@@ -7,11 +7,12 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class OrderEntity {
+public class Order {
     @Schema(description = "Order ID", name = "id", example = "1")
     private long id;
     @Schema(description = "Amount of products", name = "amount", example = "2.0")
@@ -23,4 +24,7 @@ public class OrderEntity {
     @Schema(description = "Datetime of the order created", name = "createdAt", example = "2023-07-08 13:12:00")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createdAt;
+
+    @Schema(description = "Order details", name = "details")
+    private List<OrderDetail> details;
 }
