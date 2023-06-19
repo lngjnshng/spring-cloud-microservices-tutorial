@@ -10,7 +10,7 @@ A Basic Spring Cloud Microservice Sample Project
 * Swagger 3
 
 ## Start Servers
-### Start Consul Server
+### Start Consul Server with Docker Compose
 ```
 cd consul
 docker-compose -f cluster.yaml up -d
@@ -19,6 +19,10 @@ docker-compose -f cluster.yaml up -d
 ```
 cd consul
 docker-compose -f cluster.yaml down
+```
+### Start Consul Server in Windows for develop
+```
+consul agent -dev
 ```
 ### Start API Gateway Server
 ```
