@@ -1,0 +1,128 @@
+version: '3'
+
+networks:
+  ntrubisemi:
+
+services:
+  discovery1:
+    image: rubisemi/micro.discovery:1.0.0
+    container_name: discovery1
+    restart: always
+    ports:
+      - "8079:8081"
+    environment:
+      PORT: 8081
+      APP_NAME: discovery1
+      HOSTNAME: ${IP}
+      MODE: cluster
+      OTHER_DISCOVERY_URLS: http://discovery2:8081/eureka,http://discovery3:8081/eureka
+      USER: rubisemi
+      PASSWORD: pwd2023
+    networks:
+      - ntrubisemi
+
+  discovery2:
+    image: rubisemi/micro.discovery:1.0.0
+    container_name: discovery2
+    restart: always
+    ports:
+      - "8080:8081"
+    environment:
+      PORT: 8081
+      APP_NAME: discovery2
+      HOSTNAME: ${IP}
+      MODE: cluster
+      OTHER_DISCOVERY_URLS: http://discovery1:8081/eureka,http://discovery3:8081/eureka
+      USER: rubisemi
+      PASSWORD: pwd2023
+    networks:
+      - ntrubisemi
+
+  discovery3:
+    image: rubisemi/micro.discovery:1.0.0
+    container_name: discovery3
+    restart: always
+    ports:
+      - "8081:8081"
+    environment:
+      PORT: 8081
+      APP_NAME: discovery3
+      HOSTNAME: ${IP}
+      MODE: cluster
+      OTHER_DISCOVERY_URLS: http://discovery1:8081/eureka,http://discovery2:8081/eureka
+      USER: rubisemi
+      PASSWORD: pwd2023
+    networks:
+      - ntrubisemi
+
+  rubisemi.gateway:
+    image: rubisemi/micro.gateway:1.0.0
+    container_name: rubisemi.gateway
+    restart: always
+    ports:
+      - "80:80"
+    environment:
+      PORT: 80
+      APP_NAME: gateway
+      ENV: dev
+      DISCOVERY_URL: http://discovery1:8081/eureka,http://discovery2:8081/eureka,http://discovery3:8081/eureka
+    depends_on:
+      - discovery1
+      - discovery2
+      - discovery3
+    networks:
+      - ntrubisemi
+
+  rubisemi.auth:
+    image: rubisemi/micro.auth:1.0.0
+    container_name: rubisemi.auth
+    restart: always
+    ports:
+      - "8082:8080"
+    environment:
+      PORT: 8080
+      APP_NAME: auth
+      ENV: dev
+      DISCOVERY_URL: http://discovery1:8081/eureka,http://discovery2:8081/eureka,http://discovery3:8081/eureka
+    depends_on:
+      - discovery1
+      - discovery2
+      - discovery3
+    networks:
+      - ntrubisemi
+
+  rubisemi.order:
+    image: rubisemi/micro.order:1.0.0
+    container_name: rubisemi.order
+    restart: always
+    ports:
+      - "8083:8080"
+    environment:
+      PORT: 8080
+      APP_NAME: order
+      ENV: dev
+      DISCOVERY_URL: http://discovery1:8081/eureka,http://discovery2:8081/eureka,http://discovery3:8081/eureka
+    depends_on:
+      - discovery1
+      - discovery2
+      - discovery3
+    networks:
+      - ntrubisemi
+
+  rubisemi.inventory:
+    image: rubisemi/micro.inventory:1.0.0
+    container_name: rubisemi.inventory
+    restart: always
+    ports:
+      - "8084:8080"
+    environment:
+      PORT: 8080
+      APP_NAME: inventory
+      ENV: dev
+      DISCOVERY_URL: http://discovery1:8081/eureka,http://discovery2:8081/eureka,http://discovery3:8081/eureka
+    depends_on:
+      - discovery1
+      - discovery2
+      - discovery3
+    networks:
+      - ntrubisemi
